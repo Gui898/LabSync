@@ -10,8 +10,6 @@ public interface DAOMethods<T> {
 
     void delete(T t);
 
-    void deleteById(long id);
-
     T findById(long id);
 
     List<T> findAll();

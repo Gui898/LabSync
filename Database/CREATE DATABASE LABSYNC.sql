@@ -3,21 +3,23 @@ USE LABSYNC;
 
 CREATE TABLE users (
   id_user BIGINT PRIMARY KEY auto_increment,
-  surname VARCHAR(50),
-  passwordUser VARCHAR(50) NOT NULL,
   nameUser VARCHAR(255) NOT NULL UNIQUE,
+  surname VARCHAR(50),
+  email VARCHAR(255) NOT NULL UNIQUE,
+  academicEmail VARCHAR(255) UNIQUE,
+  passwordUser VARCHAR(50) NOT NULL,
   readerOrAuthor BOOLEAN NOT NULL,
-  email VARCHAR(255) NOT NULL UNIQUE
+  aboutMe TEXT
 );
 
 CREATE TABLE project (
   id_project BIGINT PRIMARY KEY AUTO_INCREMENT,
   title VARCHAR(100) NOT NULL,
   category VARCHAR(100) NOT NULL,
-  used_instruments TEXT,
   text_project LONGTEXT NOT NULL,
   conclusion TEXT,
   used_tech TEXT,
+  used_instruments TEXT,
   id_user BIGINT NOT NULL,
   FOREIGN KEY (id_user) REFERENCES users(id_user)
 );

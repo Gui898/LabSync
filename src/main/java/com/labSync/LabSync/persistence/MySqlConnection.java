@@ -30,4 +30,8 @@ public class MySqlConnection {
         }
     }
 
+    public Connection getConnection(){
+        return this.connection;
+    }
+
 }

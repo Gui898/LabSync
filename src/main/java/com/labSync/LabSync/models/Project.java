@@ -21,16 +21,17 @@ public class Project {
         this.usedInstruments = "";
         this.usedTech = "";
         this.conclusion = "";
+        this.isPost = false;
     }
 
-    public Project(String category, String title, String textProjects, String usedInstruments, String usedTech, String conclusion) {
+    public Project(String title, String category, String textProjects, String conclusion, String usedTech, String usedInstruments) {
         this.category = category;
         this.title = title;
         this.textProjects = textProjects;
         this.usedInstruments = usedInstruments;
         this.usedTech = usedTech;
         this.conclusion = conclusion;
-
+        this.isPost = false;
     }
 
     public long getIdProject() {
