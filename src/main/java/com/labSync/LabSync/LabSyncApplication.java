@@ -13,7 +13,6 @@ public class LabSyncApplication {
 
         MySqlConnection ms = new MySqlConnection();
 
-        UserDAO userDAO = new UserDAO(ms);
-        System.out.println(userDAO.findByIdComplete(1));
+
 	}
 }
