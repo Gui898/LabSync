@@ -102,11 +102,44 @@ public class User {
         this.aboutMe = aboutMe;
     }
 
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
+    public List<Posts> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Posts> posts) {
+        this.posts = posts;
+    }
+
+    public List<Favorite> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(List<Favorite> favorites) {
+        this.favorites = favorites;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "idUser=" + idUser +
+                ", surname='" + surname + '\'' +
+                ", password='" + password + '\'' +
                 ", nameUser='" + nameUser + '\'' +
+                ", readerOrAuthor=" + readerOrAuthor +
+                ", email='" + email + '\'' +
+                ", academicEmail='" + academicEmail + '\'' +
+                ", aboutMe='" + aboutMe + '\'' +
+                ", projects=" + projects +
+                ", posts=" + posts +
+                ", favorites=" + favorites +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.labSync.LabSync.persistence.DAOS;
 
 import com.labSync.LabSync.models.Project;
+import com.labSync.LabSync.models.User;
 import com.labSync.LabSync.persistence.DAOMethods;
 import com.labSync.LabSync.persistence.MySqlConnection;
 
@@ -39,6 +40,7 @@ public class ProjectDAO implements DAOMethods<Project> {
             if (rs.next()) {
                 project.setIdProject(rs.getLong(1));
             }
+            st.close();
         }catch(SQLException e){
             e.printStackTrace();
         }finally{
@@ -62,6 +64,7 @@ public class ProjectDAO implements DAOMethods<Project> {
             st.setBoolean(6, project.isPost());
             st.setLong(7, project.getIdProject());
             st.executeUpdate();
+            st.close();
         }catch(SQLException e){
             e.printStackTrace();
         }finally{
@@ -77,6 +80,7 @@ public class ProjectDAO implements DAOMethods<Project> {
             PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
             st.setLong(1, project.getIdProject());
             st.executeUpdate();
+            st.close();
         }catch(SQLException e){
             e.printStackTrace();
         }finally{
@@ -106,8 +110,11 @@ public class ProjectDAO implements DAOMethods<Project> {
                 UserDAO userDAO = new UserDAO(this.connection);
                 project.setUser(userDAO.findById(rs.getLong("id_user")));
             }
+            st.close();
         }catch(SQLException e){
             e.printStackTrace();
+        } finally{
+            this.connection.closeConnection();
         }
         return project;
     }
@@ -135,9 +142,38 @@ public class ProjectDAO implements DAOMethods<Project> {
 
                 list.add(project);
             }
+            st.close();
         }catch(SQLException e){
             e.printStackTrace();
+        }finally{
+            this.connection.closeConnection();
         }
         return list;
     }
+
+    public List<Project> findByUserId(long idUser, User user) throws SQLException {
+        List<Project> projects = new ArrayList<>();
+        String sql = "SELECT * FROM project WHERE id_user = ?";
+        PreparedStatement st = connection.getConnection().prepareStatement(sql);
+        st.setLong(1, idUser);
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next()) {
+            Project project = new Project(
+                    rs.getString("title"),
+                    rs.getString("category"),
+                    rs.getString("text_project"),
+                    rs.getString("used_tech"),
+                    rs.getString("used_instruments"),
+                    user
+            );
+            project.setIsPost(rs.getBoolean("is_post"));
+            project.setIdProject(rs.getLong("id_project"));
+            projects.add(project);
+        }
+
+        st.close();
+        return projects;
+    }
+
 }

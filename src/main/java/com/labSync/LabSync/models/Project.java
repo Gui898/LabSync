@@ -101,7 +101,6 @@ public class Project {
         return "Project{" +
                 "idProject=" + idProject +
                 ", title='" + title + '\'' +
-                "user: " + user +
                 "isPost: " + isPost +
                 '}';
     }

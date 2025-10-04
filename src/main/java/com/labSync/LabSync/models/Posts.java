@@ -1,6 +1,6 @@
 package com.labSync.LabSync.models;
 
-import java.util.List;
+import java.util.Set;
 
 public class Posts {
 
@@ -9,7 +9,7 @@ public class Posts {
     //comments
     private User user;
     private Project project;
-    private List<Favorite> favorites;
+    private Set<Favorite> favorites;
 
     public Posts () {
         this.idPost = 0;
@@ -59,11 +59,11 @@ public class Posts {
         this.project = project;
     }
 
-    public List<Favorite> getFavorites() {
+    public Set<Favorite> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(List<Favorite> favorites) {
+    public void setFavorites(Set<Favorite> favorites) {
         this.favorites = favorites;
     }
 
@@ -71,7 +71,6 @@ public class Posts {
     public String toString() {
         return "Posts{" +
                 "project=" + project +
-                ", user=" + user +
                 ", likes=" + likes +
                 ", idPost=" + idPost +
                 '}';

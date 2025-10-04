@@ -37,6 +37,7 @@ public class PostsDAO implements DAOMethods<Posts> {
             if(rs.next()){
                 posts.setIdPost(rs.getLong(1));
             }
+            st.close();
         }catch(SQLException e){
             e.printStackTrace();
         }finally{
@@ -53,6 +54,7 @@ public class PostsDAO implements DAOMethods<Posts> {
             st.setLong(1, posts.getLikes());
             st.setLong(2, posts.getIdPost());
             st.executeUpdate();
+            st.close();
         }catch(SQLException e) {
             e.printStackTrace();
         }finally {
@@ -68,6 +70,7 @@ public class PostsDAO implements DAOMethods<Posts> {
             PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
             st.setLong(1, posts.getIdPost());
             st.executeUpdate();
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }finally{
@@ -87,11 +90,10 @@ public class PostsDAO implements DAOMethods<Posts> {
             ResultSet rs = st.executeQuery();
             if(rs.next()){
                 Project project = new ProjectDAO(this.connection).findById(rs.getLong("id_project"));
-                User user = new UserDAO(new MySqlConnection()).findById(project.getUser().getIdUser());
-                project.setUser(user);
                 post = new Posts(rs.getLong("likes"), project);
                 post.setIdPost(rs.getLong("id_post"));
             }
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -112,14 +114,13 @@ public class PostsDAO implements DAOMethods<Posts> {
             PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
 
             ResultSet rs = st.executeQuery();
-            if(rs.next()){
+            while(rs.next()){
                 Project project = new ProjectDAO(this.connection).findById(rs.getLong("id_project"));
-                User user = new UserDAO(new MySqlConnection()).findById(project.getUser().getIdUser());
-                project.setUser(user);
                 Posts post = new Posts(rs.getLong("likes"), project);
                 post.setIdPost(rs.getLong("id_post"));
                 list.add(post);
             }
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -127,7 +128,28 @@ public class PostsDAO implements DAOMethods<Posts> {
         } finally{
             this.connection.closeConnection();
         }
-
         return list;
     }
+
+    public List<Posts> findByUserId(long idUser, User user) throws Exception {
+        List<Posts> postsList = new ArrayList<>();
+        String sql = "SELECT * FROM posts WHERE id_user = ?";
+        PreparedStatement st = connection.getConnection().prepareStatement(sql);
+        st.setLong(1, idUser);
+        ResultSet rs = st.executeQuery();
+
+        ProjectDAO projectDAO = new ProjectDAO(connection); // mesma conexão
+        while(rs.next()) {
+            Project project = projectDAO.findById(rs.getLong("id_project"));
+            project.setUser(user);
+
+            Posts post = new Posts(rs.getLong("likes"), project);
+            post.setIdPost(rs.getLong("id_post"));
+            postsList.add(post);
+        }
+
+        st.close();
+        return postsList;
+    }
+
 }

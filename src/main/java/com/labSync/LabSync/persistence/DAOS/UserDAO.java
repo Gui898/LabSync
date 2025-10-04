@@ -39,6 +39,7 @@ public class UserDAO implements DAOMethods<User> {
             if(rs.next()){
                 user.setIdUser(rs.getLong(1));
             }
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }finally{
@@ -62,7 +63,7 @@ public class UserDAO implements DAOMethods<User> {
             st.setString(7, user.getAboutMe());
             st.setLong(8, user.getIdUser());
             st.executeUpdate();
-
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }finally{
@@ -78,6 +79,7 @@ public class UserDAO implements DAOMethods<User> {
             PreparedStatement st = connection.getConnection().prepareStatement(sql);
             st.setLong(1, user.getIdUser());
             st.executeUpdate();
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
@@ -102,9 +104,48 @@ public class UserDAO implements DAOMethods<User> {
                         rs.getString("aboutMe"));
                 user.setIdUser(rs.getLong("id_user"));
             }
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.connection.closeConnection();
+        }
+        return user;
+    }
+
+    public User findByIdComplete(long id) {
+        this.connection.openConnection();
+        String sql = "SELECT * FROM users WHERE id_user=?;";
+        User user = null;
+        try{
+            PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
+            st.setLong(1, id);
+
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                user = new User(rs.getString("nameUser"), rs.getString("surname"),
+                        rs.getString("email"), rs.getString("academicEmail"),
+                        rs.getString("passwordUser"), rs.getBoolean("readerOrAuthor"),
+                        rs.getString("aboutMe"));
+                user.setIdUser(rs.getLong("id_user"));
+
+                ProjectDAO projectDAO = new ProjectDAO(this.connection);
+                user.setProjects(projectDAO.findByUserId(user.getIdUser(), user));
+
+                FavoriteDAO favoriteDAO = new FavoriteDAO(this.connection);
+                user.setFavorites(favoriteDAO.findByUserId(user.getIdUser(), user));
+
+                PostsDAO postsDAO = new PostsDAO(this.connection);
+                user.setPosts(postsDAO.findByUserId(user.getIdUser(), user));
+            }
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
             this.connection.closeConnection();
         }
         return user;
@@ -125,11 +166,24 @@ public class UserDAO implements DAOMethods<User> {
                         rs.getString("passwordUser"), rs.getBoolean("readerOrAuthor"),
                         rs.getString("aboutMe"));
                 user.setIdUser(rs.getLong("id_user"));
+
+                ProjectDAO projectDAO = new ProjectDAO(this.connection);
+                user.setProjects(projectDAO.findByUserId(user.getIdUser(), user));
+
+                FavoriteDAO favoriteDAO = new FavoriteDAO(this.connection);
+                user.setFavorites(favoriteDAO.findByUserId(user.getIdUser(), user));
+
+                PostsDAO postsDAO = new PostsDAO(this.connection);
+                user.setPosts(postsDAO.findByUserId(user.getIdUser(), user));
+
                 list.add(user);
             }
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
             this.connection.closeConnection();
         }
         return list;
