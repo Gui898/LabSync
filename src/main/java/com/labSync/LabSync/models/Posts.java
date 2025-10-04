@@ -1,24 +1,29 @@
 package com.labSync.LabSync.models;
 
+import java.util.List;
+
 public class Posts {
 
     private long idPost;
     private long likes;
-    //comentarios
+    //comments
     private User user;
     private Project project;
-    private Favorite favorite;
+    private List<Favorite> favorites;
 
     public Posts () {
         this.idPost = 0;
         this.likes = 0;
     }
 
-    public Posts(long likes, User user, Project project) {
+    public Posts(long likes, Project project) throws Exception {
         this.likes = likes;
-        this.user = user;
-        if (project.isPost()) {
+        if (!project.isPost()) {
             this.project = project;
+            this.project.setIsPost(true);
+            this.user = project.getUser();
+        }else {
+            System.out.println("Já é um post");
         }
     }
 
@@ -36,5 +41,39 @@ public class Posts {
 
     public void setLikes(long likes) {
         this.likes = likes;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public List<Favorite> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(List<Favorite> favorites) {
+        this.favorites = favorites;
+    }
+
+    @Override
+    public String toString() {
+        return "Posts{" +
+                "project=" + project +
+                ", user=" + user +
+                ", likes=" + likes +
+                ", idPost=" + idPost +
+                '}';
     }
 }

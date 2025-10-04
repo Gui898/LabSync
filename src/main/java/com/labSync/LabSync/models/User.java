@@ -1,5 +1,7 @@
 package com.labSync.LabSync.models;
-import java.util.ArrayList;
+
+import java.util.List;
+
 public class User {
 
     private long idUser;
@@ -11,9 +13,9 @@ public class User {
     private String email;
     private String academicEmail;
     private String aboutMe;
-    private ArrayList<Project> projects;
-    private ArrayList<Posts> posts;
-    private ArrayList<Favorite> favorites;
+    private List<Project> projects;
+    private List<Posts> posts;
+    private List<Favorite> favorites;
 
     public User() {
         this.idUser = 0;

@@ -1,15 +1,31 @@
 package com.labSync.LabSync.models;
-import java.util.ArrayList;
 
 public class Favorite {
 
+    private Posts post;
     private User user;
-    private ArrayList<Posts> posts;
+
     public Favorite() {
     }
 
-    public Favorite(User user) {
+    public Favorite(Posts post, User user) {
+        this.post = post;
         this.user = user;
-        this.posts = new ArrayList<Posts>();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Posts getPosts() {
+        return post;
+    }
+
+    public void setPosts(Posts post) {
+        this.post = post;
     }
 }

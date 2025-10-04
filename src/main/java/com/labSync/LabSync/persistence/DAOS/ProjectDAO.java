@@ -30,8 +30,8 @@ public class ProjectDAO implements DAOMethods<Project> {
             st.setString(2, project.getCategory());
             st.setString(3, project.getUsedInstruments());
             st.setString(4, project.getTextProjects());
-            st.setString(5, project.getConclusion());
-            st.setString(6, project.getUsedTech());
+            st.setString(5, project.getUsedTech());
+            st.setBoolean(6, project.isPost());
             st.setLong(7, project.getUser().getIdUser());
             st.executeUpdate();
 
@@ -58,8 +58,8 @@ public class ProjectDAO implements DAOMethods<Project> {
             st.setString(2, project.getCategory());
             st.setString(3, project.getUsedInstruments());
             st.setString(4, project.getTextProjects());
-            st.setString(5, project.getConclusion());
-            st.setString(6, project.getUsedTech());
+            st.setString(5, project.getUsedTech());
+            st.setBoolean(6, project.isPost());
             st.setLong(7, project.getIdProject());
             st.executeUpdate();
         }catch(SQLException e){
@@ -97,10 +97,11 @@ public class ProjectDAO implements DAOMethods<Project> {
                 project = new Project(rs.getString("title"),
                         rs.getString("category"),
                         rs.getString("text_project"),
-                        rs.getString("conclusion"),
                         rs.getString("used_tech"),
-                        rs.getString("used_instruments")
+                        rs.getString("used_instruments"),
+                        null
                 );
+                project.setIsPost(rs.getBoolean("is_post"));
                 project.setIdProject(rs.getLong("id_project"));
                 UserDAO userDAO = new UserDAO(this.connection);
                 project.setUser(userDAO.findById(rs.getLong("id_user")));
@@ -123,10 +124,11 @@ public class ProjectDAO implements DAOMethods<Project> {
                 Project project = new Project(rs.getString("title"),
                         rs.getString("category"),
                         rs.getString("text_project"),
-                        rs.getString("conclusion"),
                         rs.getString("used_tech"),
-                        rs.getString("used_instruments")
+                        rs.getString("used_instruments"),
+                        null
                 );
+                project.setIsPost(rs.getBoolean("is_post"));
                 project.setIdProject(rs.getLong("id_project"));
                 UserDAO userDAO = new UserDAO(this.connection);
                 project.setUser(userDAO.findById(rs.getLong("id_user")));

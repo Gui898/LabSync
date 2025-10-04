@@ -7,7 +7,6 @@ public class Project {
     private String category;
     private String usedInstruments;
     private String textProjects;
-    private String conclusion;
     private String usedTech;
     private User user;
     private boolean isPost;
@@ -20,18 +19,17 @@ public class Project {
         this.textProjects = "";
         this.usedInstruments = "";
         this.usedTech = "";
-        this.conclusion = "";
         this.isPost = false;
     }
 
-    public Project(String title, String category, String textProjects, String conclusion, String usedTech, String usedInstruments) {
+    public Project(String title, String category, String textProjects, String usedTech, String usedInstruments, User user) {
         this.category = category;
         this.title = title;
         this.textProjects = textProjects;
         this.usedInstruments = usedInstruments;
         this.usedTech = usedTech;
-        this.conclusion = conclusion;
         this.isPost = false;
+        this.user = user;
     }
 
     public long getIdProject() {
@@ -82,14 +80,6 @@ public class Project {
         this.usedTech = usedTech;
     }
 
-    public String getConclusion () {
-        return conclusion;
-    }
-
-    public void setConclusion (String conclusion) {
-        this.conclusion = conclusion;
-    }
-
     public boolean isPost() {
         return isPost;
     }
@@ -112,6 +102,7 @@ public class Project {
                 "idProject=" + idProject +
                 ", title='" + title + '\'' +
                 "user: " + user +
+                "isPost: " + isPost +
                 '}';
     }
 }

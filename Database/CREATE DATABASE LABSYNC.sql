@@ -18,8 +18,8 @@ CREATE TABLE project (
   category VARCHAR(100) NOT NULL,
   used_instruments TEXT,
   text_project LONGTEXT NOT NULL,
-  conclusion TEXT,
   used_tech TEXT,
+  is_post BOOLEAN NOT NULL,
   id_user BIGINT NOT NULL,
   FOREIGN KEY (id_user) REFERENCES users(id_user)
 );
