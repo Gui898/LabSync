@@ -104,13 +104,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "idUser=" + idUser +
-                ", surname='" + surname + '\'' +
-                ", password='" + password + '\'' +
                 ", nameUser='" + nameUser + '\'' +
-                ", readerOrAuthor=" + readerOrAuthor +
-                ", email='" + email + '\'' +
-                ", academicEmail='" + academicEmail + '\'' +
-                ", aboutMe='" + aboutMe + '\'' +
                 '}';
     }
 }

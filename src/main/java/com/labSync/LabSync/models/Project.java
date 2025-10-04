@@ -105,4 +105,13 @@ public class Project {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "idProject=" + idProject +
+                ", title='" + title + '\'' +
+                "user: " + user +
+                '}';
+    }
 }

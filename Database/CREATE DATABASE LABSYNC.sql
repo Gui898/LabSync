@@ -16,10 +16,10 @@ CREATE TABLE project (
   id_project BIGINT PRIMARY KEY AUTO_INCREMENT,
   title VARCHAR(100) NOT NULL,
   category VARCHAR(100) NOT NULL,
+  used_instruments TEXT,
   text_project LONGTEXT NOT NULL,
   conclusion TEXT,
   used_tech TEXT,
-  used_instruments TEXT,
   id_user BIGINT NOT NULL,
   FOREIGN KEY (id_user) REFERENCES users(id_user)
 );
@@ -38,4 +38,12 @@ CREATE TABLE favorite (
   id_project BIGINT NOT NULL,
   FOREIGN KEY (id_user) REFERENCES users(id_user),
   FOREIGN KEY (id_project) REFERENCES project(id_project)
+);
+
+CREATE TABLE commentPost(
+	id_comment BIGINT AUTO_INCREMENT,
+    message VARCHAR(300) NOT NULL,
+    id_post BIGINT NOT NULL,
+    PRIMARY KEY(id_comment),
+    FOREIGN KEY(id_post) REFERENCES posts(id_post)
 );
