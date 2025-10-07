@@ -8,7 +8,7 @@ public interface DAOMethods<T> {
 
     void edit(T t);
 
-    void delete(T t);
+    void delete(long id);
 
     T findById(long id);
 

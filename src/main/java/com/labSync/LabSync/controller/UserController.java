@@ -20,31 +20,42 @@ public class UserController implements ProtocolMethods<User>{
     @Override
     @PostMapping
     public User post(@RequestBody User user) {
-        return userService.addUser(user);
+        userService.addUser(user);
+        return user;
     }
 
     @Override
-    public boolean delete(User user) {
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable long id) {
+        userService.delete(id);
         return true;
     }
 
     @Override
-    public User put(User entity) {
-        return null;
+    @PutMapping("/{id}")
+    public User put(@PathVariable long id, @RequestBody User user) {
+        user.setIdUser(id);
+        userService.updateUser(user);
+        return user;
     }
 
     @Override
-    public User patch(User entity) {
-        return null;
+    @PatchMapping("/{id}")
+    public User patch(@PathVariable long id, @RequestBody User user) {
+        user.setIdUser(id);
+        userService.updateUser(user);
+        return user;
     }
 
     @Override
-    public User getById(int id) {
-        return null;
+    @GetMapping("/{id}")
+    public User getById(@PathVariable int id) {
+        return userService.getUserById(id);
     }
 
     @Override
+    @GetMapping
     public List<User> getAll() {
-        return List.of();
+        return userService.getAllUsers();
     }
 }

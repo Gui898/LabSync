@@ -25,9 +25,9 @@ public class ProjectService {
         return project;
     }
 
-    public Project delete(Project project){
-        projectDAO.delete(project);
-        return project;
+    public long delete(long id){
+        projectDAO.delete(id);
+        return id;
     }
 
     public Project getProjectById(int id){

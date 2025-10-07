@@ -3,6 +3,7 @@ package com.labSync.LabSync.persistence.DAOS;
 import com.labSync.LabSync.models.User;
 import com.labSync.LabSync.persistence.DAOMethods;
 import com.labSync.LabSync.persistence.MySqlConnection;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class UserDAO implements DAOMethods<User> {
 
     MySqlConnection connection;
@@ -72,12 +74,12 @@ public class UserDAO implements DAOMethods<User> {
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(long id) {
         this.connection.openConnection();
         String sql = "DELETE FROM users WHERE id_user=?;";
         try {
             PreparedStatement st = connection.getConnection().prepareStatement(sql);
-            st.setLong(1, user.getIdUser());
+            st.setLong(1, id);
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
@@ -188,4 +190,6 @@ public class UserDAO implements DAOMethods<User> {
         }
         return list;
     }
+
+
 }

@@ -25,9 +25,9 @@ public class FavoriteService {
         return favorite;
     }
 
-    public Favorite delete(Favorite favorite){
-        favoriteDAO.delete(favorite);
-        return favorite;
+    public long delete(long id){
+        favoriteDAO.delete(id);
+        return id;
     }
 
     public Favorite getFavoriteById(int id) {

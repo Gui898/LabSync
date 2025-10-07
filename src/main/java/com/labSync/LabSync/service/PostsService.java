@@ -25,9 +25,9 @@ public class PostsService {
         return post;
     }
 
-    public Posts delete(Posts post){
-        postsDAO.delete(post);
-        return post;
+    public long delete(long id){
+        postsDAO.delete(id);
+        return id;
     }
 
     public Posts getPostById(int id) {

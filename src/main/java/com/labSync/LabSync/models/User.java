@@ -5,14 +5,14 @@ import java.util.List;
 public class User {
 
     private long idUser;
-    private String surname;
-    private String password;
     private String nameUser;
-    //true for author, false for reader.
-    private boolean readerOrAuthor;
+    private String surname;
     private String email;
+    private String password;
     private String academicEmail;
     private String aboutMe;
+    //true for author, false for reader.
+    private boolean readerOrAuthor;
     private List<Project> projects;
     private List<Posts> posts;
     private List<Favorite> favorites;

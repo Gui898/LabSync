@@ -1,5 +1,7 @@
 package com.labSync.LabSync.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Project {
 
     private long idProject;
@@ -8,6 +10,7 @@ public class Project {
     private String usedInstruments;
     private String textProjects;
     private String usedTech;
+    @JsonIgnore
     private User user;
     private boolean isPost;
     //false is sketch

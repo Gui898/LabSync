@@ -6,11 +6,11 @@ public interface ProtocolMethods<T> {
 
     T post(T entity);
 
-    boolean delete(T entity);
+    boolean delete(long id);
 
-    T put(T entity);
+    T put(long id, T entity);
 
-    T patch(T entity);
+    T patch(long id, T entity);
 
     T getById(int id);
 

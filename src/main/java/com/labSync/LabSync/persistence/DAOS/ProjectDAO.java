@@ -4,6 +4,7 @@ import com.labSync.LabSync.models.Project;
 import com.labSync.LabSync.models.User;
 import com.labSync.LabSync.persistence.DAOMethods;
 import com.labSync.LabSync.persistence.MySqlConnection;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class ProjectDAO implements DAOMethods<Project> {
 
     MySqlConnection connection;
@@ -73,12 +75,12 @@ public class ProjectDAO implements DAOMethods<Project> {
     }
 
     @Override
-    public void delete(Project project) {
+    public void delete(long id) {
         this.connection.openConnection();
         String sql = "DELETE FROM project WHERE id_project=?;";
         try{
             PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
-            st.setLong(1, project.getIdProject());
+            st.setLong(1, id);
             st.executeUpdate();
             st.close();
         }catch(SQLException e){

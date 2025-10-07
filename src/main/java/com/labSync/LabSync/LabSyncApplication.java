@@ -1,6 +1,5 @@
 package com.labSync.LabSync;
 
-import com.labSync.LabSync.persistence.DAOS.UserDAO;
 import com.labSync.LabSync.persistence.MySqlConnection;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

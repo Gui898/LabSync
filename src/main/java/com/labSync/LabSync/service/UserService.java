@@ -25,9 +25,9 @@ public class UserService {
         return user;
     }
 
-    public User delete(User user){
-        userDAO.delete(user);
-        return user;
+    public long delete(long id){
+        userDAO.delete(id);
+        return id;
     }
 
     public User getUserById(int id) {

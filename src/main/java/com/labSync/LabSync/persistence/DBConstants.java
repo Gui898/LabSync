@@ -1,5 +1,8 @@
 package com.labSync.LabSync.persistence;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DBConstants {
 
     public static final String LOGIN = "root";
