@@ -2,6 +2,7 @@ package com.labSync.LabSync.controller;
 
 import com.labSync.LabSync.models.User;
 import com.labSync.LabSync.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,9 +20,9 @@ public class UserController implements ProtocolMethods<User>{
 
     @Override
     @PostMapping
-    public User post(@RequestBody User user) {
+    public ResponseEntity<User> post(@RequestBody User user) {
         userService.addUser(user);
-        return user;
+        return ResponseEntity.ok(user);
     }
 
     @Override

@@ -3,8 +3,8 @@ USE LABSYNC;
 
 CREATE TABLE users (
   id_user BIGINT PRIMARY KEY auto_increment,
-  nameUser VARCHAR(255) NOT NULL,
-  surname VARCHAR(50) UNIQUE,
+  nameUser VARCHAR(255) NOT NULL UNIQUE,
+  surname VARCHAR(50),
   email VARCHAR(255) NOT NULL UNIQUE,
   academicEmail VARCHAR(255) UNIQUE,
   passwordUser VARCHAR(50) NOT NULL,

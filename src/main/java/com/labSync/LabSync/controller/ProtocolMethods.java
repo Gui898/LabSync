@@ -1,10 +1,12 @@
 package com.labSync.LabSync.controller;
 
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 public interface ProtocolMethods<T> {
 
-    T post(T entity);
+    ResponseEntity<T> post(T entity);
 
     boolean delete(long id);
 
