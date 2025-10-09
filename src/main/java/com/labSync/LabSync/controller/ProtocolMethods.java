@@ -14,8 +14,8 @@ public interface ProtocolMethods<T> {
 
     ResponseEntity<String> patch(long id, T entity);
 
-    T getById(int id);
+    ResponseEntity<T> getById(int id);
 
-    List<T> getAll();
+    ResponseEntity<List<T>> getAll();
 
 }

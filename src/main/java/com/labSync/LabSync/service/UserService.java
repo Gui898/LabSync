@@ -39,6 +39,9 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
+        if(userDAO.findAll().isEmpty()){
+            throw new UserNotFoundException("Usuários não encontrados");
+        }
         return userDAO.findAll();
     }
 
