@@ -1,5 +1,6 @@
 package com.labSync.LabSync.service;
 
+import com.labSync.LabSync.exception.UserNotFoundException;
 import com.labSync.LabSync.models.User;
 import com.labSync.LabSync.persistence.DAOS.UserDAO;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,9 @@ public class UserService {
     }
 
     public User getUserById(int id) {
+        if(userDAO.findById(id) == null){
+            throw new UserNotFoundException();
+        }
         return userDAO.findById(id);
     }
 

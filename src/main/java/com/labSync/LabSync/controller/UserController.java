@@ -20,32 +20,32 @@ public class UserController implements ProtocolMethods<User>{
 
     @Override
     @PostMapping
-    public ResponseEntity<User> post(@RequestBody User user) {
+    public ResponseEntity<String> post(@RequestBody User user) {
         userService.addUser(user);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok("Usuário cadastrado com sucesso!");
     }
 
     @Override
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable long id) {
+    public ResponseEntity<String> delete(@PathVariable long id) {
         userService.delete(id);
-        return true;
+        return ResponseEntity.ok("Usuário deletado com sucesso!");
     }
 
     @Override
     @PutMapping("/{id}")
-    public User put(@PathVariable long id, @RequestBody User user) {
+    public ResponseEntity<String> put(@PathVariable long id, @RequestBody User user) {
         user.setIdUser(id);
         userService.updateUser(user);
-        return user;
+        return ResponseEntity.ok("Usuário atualizado com sucesso!");
     }
 
     @Override
     @PatchMapping("/{id}")
-    public User patch(@PathVariable long id, @RequestBody User user) {
+    public ResponseEntity<String> patch(@PathVariable long id, @RequestBody User user) {
         user.setIdUser(id);
         userService.updateUser(user);
-        return user;
+        return ResponseEntity.ok("Usuário atualizado com sucesso!");
     }
 
     @Override
