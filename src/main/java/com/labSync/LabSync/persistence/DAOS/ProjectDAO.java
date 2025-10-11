@@ -34,7 +34,7 @@ public class ProjectDAO implements DAOMethods<Project> {
             st.setString(3, project.getUsedInstruments());
             st.setString(4, project.getTextProjects());
             st.setString(5, project.getUsedTech());
-            st.setBoolean(6, project.isPost());
+            st.setBoolean(6, project.hasPost());
             st.setLong(7, project.getUser().getIdUser());
             st.executeUpdate();
 
@@ -54,8 +54,8 @@ public class ProjectDAO implements DAOMethods<Project> {
     public void edit(Project project) {
         this.connection.openConnection();
         String sql = "UPDATE project SET title=?, category=?, " +
-                "used_instruments=?, text_project=?, conclusion=?, used_tech=? " +
-                "WHERE id_project=?;";
+                "used_instruments=?, text_project=?, used_tech=?, " +
+                "has_post=? WHERE id_project=?;";
         try{
             PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
             st.setString(1, project.getTitle());
@@ -63,7 +63,7 @@ public class ProjectDAO implements DAOMethods<Project> {
             st.setString(3, project.getUsedInstruments());
             st.setString(4, project.getTextProjects());
             st.setString(5, project.getUsedTech());
-            st.setBoolean(6, project.isPost());
+            st.setBoolean(6, project.hasPost());
             st.setLong(7, project.getIdProject());
             st.executeUpdate();
             st.close();
@@ -107,7 +107,7 @@ public class ProjectDAO implements DAOMethods<Project> {
                         rs.getString("used_instruments"),
                         null
                 );
-                project.setIsPost(rs.getBoolean("is_post"));
+                project.setHasPost(rs.getBoolean("has_post"));
                 project.setIdProject(rs.getLong("id_project"));
                 UserDAO userDAO = new UserDAO(this.connection);
                 project.setUser(userDAO.findById(rs.getLong("id_user")));
@@ -116,6 +116,36 @@ public class ProjectDAO implements DAOMethods<Project> {
         }catch(SQLException e){
             e.printStackTrace();
         } finally{
+            this.connection.closeConnection();
+        }
+        return project;
+    }
+
+    public Project findByTitle(String title){
+        this.connection.openConnection();
+        String sql = "SELECT * FROM project WHERE title=?;";
+        Project project = null;
+        try{
+            PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
+            st.setString(1, title);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()) {
+                project = new Project(rs.getString("title"),
+                        rs.getString("category"),
+                        rs.getString("text_project"),
+                        rs.getString("used_tech"),
+                        rs.getString("used_instruments"),
+                        null
+                );
+                project.setHasPost(rs.getBoolean("has_post"));
+                project.setIdProject(rs.getLong("id_project"));
+                UserDAO userDAO = new UserDAO(this.connection);
+                project.setUser(userDAO.findById(rs.getLong("id_user")));
+            }
+            st.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
             this.connection.closeConnection();
         }
         return project;
@@ -137,7 +167,7 @@ public class ProjectDAO implements DAOMethods<Project> {
                         rs.getString("used_instruments"),
                         null
                 );
-                project.setIsPost(rs.getBoolean("is_post"));
+                project.setHasPost(rs.getBoolean("has_post"));
                 project.setIdProject(rs.getLong("id_project"));
                 UserDAO userDAO = new UserDAO(this.connection);
                 project.setUser(userDAO.findById(rs.getLong("id_user")));
@@ -169,7 +199,7 @@ public class ProjectDAO implements DAOMethods<Project> {
                     rs.getString("used_instruments"),
                     user
             );
-            project.setIsPost(rs.getBoolean("is_post"));
+            project.setHasPost(rs.getBoolean("has_post"));
             project.setIdProject(rs.getLong("id_project"));
             projects.add(project);
         }

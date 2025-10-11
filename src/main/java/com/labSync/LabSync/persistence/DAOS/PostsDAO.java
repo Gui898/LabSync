@@ -35,6 +35,9 @@ public class PostsDAO implements DAOMethods<Posts> {
             st.setLong(3, posts.getProject().getIdProject());
             st.executeUpdate();
 
+            ProjectDAO pd = new ProjectDAO(this.connection);
+            pd.edit(posts.getProject());
+
             ResultSet rs = st.getGeneratedKeys();
             if(rs.next()){
                 posts.setIdPost(rs.getLong(1));
@@ -133,6 +136,38 @@ public class PostsDAO implements DAOMethods<Posts> {
         return list;
     }
 
+    public List<Posts> findAllByUserId(long idUser){
+        this.connection.openConnection();
+        String sql = "SELECT * FROM posts pt INNER JOIN project pr ON pt.id_project = pr.id_project " +
+                "WHERE pt.id_user = ?;";
+        List<Posts> list = new ArrayList<>();
+        try{
+            PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
+            st.setLong(1, idUser);
+
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                User user = new UserDAO(connection).findById(idUser);
+                Project project = new Project(rs.getString("title"), rs.getString("category"),
+                        rs.getString("text_project"), rs.getString("used_tech"),
+                        rs.getString("used_instruments"), user);
+                Posts post = new Posts(rs.getLong("likes"), project);
+                post.setIdPost(rs.getLong("id_post"));
+                list.add(post);
+            }
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally{
+            this.connection.closeConnection();
+        }
+        return list;
+    }
+
+
+    //ONLY USED FOR THE COMPLETE SEARCH FROM USER
     public List<Posts> findByUserId(long idUser, User user) throws Exception {
         List<Posts> postsList = new ArrayList<>();
         String sql = "SELECT * FROM posts WHERE id_user = ?";
@@ -140,7 +175,7 @@ public class PostsDAO implements DAOMethods<Posts> {
         st.setLong(1, idUser);
         ResultSet rs = st.executeQuery();
 
-        ProjectDAO projectDAO = new ProjectDAO(connection); // mesma conexão
+        ProjectDAO projectDAO = new ProjectDAO(connection);
         while(rs.next()) {
             Project project = projectDAO.findById(rs.getLong("id_project"));
             project.setUser(user);

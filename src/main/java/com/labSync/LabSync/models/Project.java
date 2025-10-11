@@ -12,7 +12,7 @@ public class Project {
     private String usedTech;
     @JsonIgnore
     private User user;
-    private boolean isPost;
+    private boolean hasPost;
     //false is sketch
 
     public Project() {
@@ -22,7 +22,7 @@ public class Project {
         this.textProjects = "";
         this.usedInstruments = "";
         this.usedTech = "";
-        this.isPost = false;
+        this.hasPost = false;
     }
 
     public Project(String title, String category, String textProjects, String usedTech, String usedInstruments, User user) {
@@ -31,7 +31,7 @@ public class Project {
         this.textProjects = textProjects;
         this.usedInstruments = usedInstruments;
         this.usedTech = usedTech;
-        this.isPost = false;
+        this.hasPost = false;
         this.user = user;
     }
 
@@ -83,12 +83,12 @@ public class Project {
         this.usedTech = usedTech;
     }
 
-    public boolean isPost() {
-        return isPost;
+    public boolean hasPost() {
+        return hasPost;
     }
 
-    public void setIsPost(boolean isPost) {
-        this.isPost = isPost;
+    public void setHasPost(boolean isPost) {
+        this.hasPost = isPost;
     }
 
     public User getUser() {
@@ -104,7 +104,7 @@ public class Project {
         return "Project{" +
                 "idProject=" + idProject +
                 ", title='" + title + '\'' +
-                "isPost: " + isPost +
+                "hasPost: " + hasPost +
                 '}';
     }
 }

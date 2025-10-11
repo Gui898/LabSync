@@ -20,11 +20,11 @@ public class Posts {
         this.likes = 0;
     }
 
-    public Posts(long likes, Project project) throws Exception {
+    public Posts(long likes, Project project){
         this.likes = likes;
-        if (!project.isPost()) {
+        if (!project.hasPost()) {
             this.project = project;
-            this.project.setIsPost(true);
+            this.project.setHasPost(true);
             this.user = project.getUser();
         }else {
             System.out.println("Já é um post");

@@ -20,38 +20,43 @@ public class UserController implements ProtocolMethods<User>{
 
     @Override
     @PostMapping
-    public ResponseEntity<String> post(@RequestBody User user) {
-        userService.addUser(user);
-        return ResponseEntity.ok("Usuário cadastrado com sucesso!");
+    public ResponseEntity<User> post(@RequestBody User user) {
+        User added = userService.addUser(user);
+        return ResponseEntity.status(201).body(added);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable long id) {
+    public ResponseEntity<Void> delete(@PathVariable long id) {
         userService.delete(id);
-        return ResponseEntity.ok("Usuário deletado com sucesso!");
+        return ResponseEntity.noContent().build();
     }
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<String> put(@PathVariable long id, @RequestBody User user) {
+    public ResponseEntity<User> put(@PathVariable long id, @RequestBody User user) {
         user.setIdUser(id);
-        userService.updateUser(user);
-        return ResponseEntity.ok("Usuário atualizado com sucesso!");
+        User edited = userService.updateUser(user);
+        return ResponseEntity.ok(edited);
     }
 
     @Override
     @PatchMapping("/{id}")
-    public ResponseEntity<String> patch(@PathVariable long id, @RequestBody User user) {
+    public ResponseEntity<User> patch(@PathVariable long id, @RequestBody User user) {
         user.setIdUser(id);
-        userService.updateUser(user);
-        return ResponseEntity.ok("Usuário atualizado com sucesso!");
+        User edited = userService.updateUser(user);
+        return ResponseEntity.ok(edited);
     }
 
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<User>  getById(@PathVariable int id) {
         return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @GetMapping("/complete/{id}")
+    public ResponseEntity<User>  getCompleteById(@PathVariable int id) {
+        return ResponseEntity.ok(userService.getCompleteUserById(id));
     }
 
     @Override
