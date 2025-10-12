@@ -86,7 +86,8 @@ public class PostsDAO implements DAOMethods<Posts> {
     @Override
     public Posts findById(long id) {
         this.connection.openConnection();
-        String sql = "SELECT * FROM posts WHERE id_post=?;";
+        String sql = "SELECT * FROM posts pt INNER JOIN project pr ON pt.id_project = pr.id_project " +
+                "WHERE pt.id_post=?;";
         Posts post = null;
         try{
             PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
@@ -94,7 +95,12 @@ public class PostsDAO implements DAOMethods<Posts> {
 
             ResultSet rs = st.executeQuery();
             if(rs.next()){
-                Project project = new ProjectDAO(this.connection).findById(rs.getLong("id_project"));
+                User user = new UserDAO(connection).findById(rs.getLong("id_user"));
+                Project project = new Project(rs.getString("title"), rs.getString("category"),
+                        rs.getString("text_project"), rs.getString("used_tech"),
+                        rs.getString("used_instruments"), user);
+                project.setIdProject(rs.getLong("id_project"));
+
                 post = new Posts(rs.getLong("likes"), project);
                 post.setIdPost(rs.getLong("id_post"));
             }
@@ -113,16 +119,22 @@ public class PostsDAO implements DAOMethods<Posts> {
     @Override
     public List<Posts> findAll() {
         this.connection.openConnection();
-        String sql = "SELECT * FROM posts;";
+        String sql = "SELECT * FROM posts pt INNER JOIN project pr ON pt.id_project = pr.id_project;";
         List<Posts> list = new ArrayList<>();
         try{
             PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
 
             ResultSet rs = st.executeQuery();
             while(rs.next()){
-                Project project = new ProjectDAO(this.connection).findById(rs.getLong("id_project"));
+                User user = new UserDAO(connection).findById(rs.getLong("id_user"));
+                Project project = new Project(rs.getString("title"), rs.getString("category"),
+                        rs.getString("text_project"), rs.getString("used_tech"),
+                        rs.getString("used_instruments"), user);
+                project.setIdProject(rs.getLong("id_project"));
+
                 Posts post = new Posts(rs.getLong("likes"), project);
                 post.setIdPost(rs.getLong("id_post"));
+
                 list.add(post);
             }
             st.close();
@@ -151,6 +163,8 @@ public class PostsDAO implements DAOMethods<Posts> {
                 Project project = new Project(rs.getString("title"), rs.getString("category"),
                         rs.getString("text_project"), rs.getString("used_tech"),
                         rs.getString("used_instruments"), user);
+                project.setIdProject(rs.getLong("id_project"));
+
                 Posts post = new Posts(rs.getLong("likes"), project);
                 post.setIdPost(rs.getLong("id_post"));
                 list.add(post);
@@ -164,29 +178,6 @@ public class PostsDAO implements DAOMethods<Posts> {
             this.connection.closeConnection();
         }
         return list;
-    }
-
-
-    //ONLY USED FOR THE COMPLETE SEARCH FROM USER
-    public List<Posts> findByUserId(long idUser, User user) throws Exception {
-        List<Posts> postsList = new ArrayList<>();
-        String sql = "SELECT * FROM posts WHERE id_user = ?";
-        PreparedStatement st = connection.getConnection().prepareStatement(sql);
-        st.setLong(1, idUser);
-        ResultSet rs = st.executeQuery();
-
-        ProjectDAO projectDAO = new ProjectDAO(connection);
-        while(rs.next()) {
-            Project project = projectDAO.findById(rs.getLong("id_project"));
-            project.setUser(user);
-
-            Posts post = new Posts(rs.getLong("likes"), project);
-            post.setIdPost(rs.getLong("id_post"));
-            postsList.add(post);
-        }
-
-        st.close();
-        return postsList;
     }
 
 }

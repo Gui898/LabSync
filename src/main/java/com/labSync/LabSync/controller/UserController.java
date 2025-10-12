@@ -54,11 +54,6 @@ public class UserController implements ProtocolMethods<User>{
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @GetMapping("/complete/{id}")
-    public ResponseEntity<User>  getCompleteById(@PathVariable int id) {
-        return ResponseEntity.ok(userService.getCompleteUserById(id));
-    }
-
     @Override
     @GetMapping
     public ResponseEntity<List<User>> getAll() {

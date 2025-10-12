@@ -46,14 +46,6 @@ public class UserService {
         return userDAO.findById(id);
     }
 
-    public User getCompleteUserById(int id) {
-        User user = userDAO.findByIdComplete(id);
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
-        return user;
-    }
-
     public List<User> getAllUsers() {
         if(userDAO.findAll().isEmpty()){
             throw new UserNotFoundException("Usuários não encontrados");

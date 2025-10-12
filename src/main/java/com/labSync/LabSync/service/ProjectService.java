@@ -42,8 +42,15 @@ public class ProjectService {
         return projectDAO.findById(id);
     }
 
+    public List<Project> getProjectsByUserId(long userId){
+        if(projectDAO.findAllByUserId(userId).isEmpty()){
+            throw new ProjectNotFoundException("Projetos não encontrados");
+        }
+        return projectDAO.findAllByUserId(userId);
+    }
+
     public List<Project> getAllProjects(){
-        if(projectDAO.findAll() == null){
+        if(projectDAO.findAll().isEmpty()){
             throw new ProjectNotFoundException();
         }
         return projectDAO.findAll();
@@ -54,8 +61,10 @@ public class ProjectService {
             throw new ProjectNotFoundException();
         }
 
-        if(projectDAO.findByTitle(project.getTitle()) != null){
-            throw new ProjectConflictException();
+        for(Project p : projectDAO.findByTitle(project.getTitle())){
+            if(p.getIdProject() == project.getIdProject()){
+                throw new ProjectConflictException();
+            }
         }
 
         if(project.getTitle() == null || project.getCategory() == null || project.getTextProjects() == null){

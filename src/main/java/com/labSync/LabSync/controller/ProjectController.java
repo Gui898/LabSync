@@ -54,6 +54,11 @@ public class ProjectController implements ProtocolMethods<Project>{
         return ResponseEntity.ok(projectService.getProjectById(id));
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Project>> getAllByUserId(@PathVariable long id) {
+        return ResponseEntity.ok(projectService.getProjectsByUserId(id));
+    }
+
     @Override
     @GetMapping
     public ResponseEntity<List<Project>> getAll() {

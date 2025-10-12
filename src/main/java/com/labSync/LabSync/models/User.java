@@ -126,6 +126,18 @@ public class User {
         this.favorites = favorites;
     }
 
+    public void addPost(Posts post) {
+        this.posts.add(post);
+    }
+
+    public void addProject(Project project) {
+        this.projects.add(project);
+    }
+
+    public void addFavorite(Favorite favorite) {
+        this.favorites.add(favorite);
+    }
+
     @Override
     public String toString() {
         return "User{" +

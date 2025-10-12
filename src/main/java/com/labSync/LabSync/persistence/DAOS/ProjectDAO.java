@@ -1,7 +1,6 @@
 package com.labSync.LabSync.persistence.DAOS;
 
 import com.labSync.LabSync.models.Project;
-import com.labSync.LabSync.models.User;
 import com.labSync.LabSync.persistence.DAOMethods;
 import com.labSync.LabSync.persistence.MySqlConnection;
 import org.springframework.stereotype.Repository;
@@ -121,16 +120,48 @@ public class ProjectDAO implements DAOMethods<Project> {
         return project;
     }
 
-    public Project findByTitle(String title){
+    public List<Project> findAllByUserId(long id) {
         this.connection.openConnection();
-        String sql = "SELECT * FROM project WHERE title=?;";
-        Project project = null;
+        String sql = "SELECT * FROM project WHERE id_user=?;";
+        List<Project> list = new ArrayList<>();
+        try{
+            PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
+            st.setLong(1, id);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()) {
+                Project project = new Project(rs.getString("title"),
+                        rs.getString("category"),
+                        rs.getString("text_project"),
+                        rs.getString("used_tech"),
+                        rs.getString("used_instruments"),
+                        null
+                );
+                project.setHasPost(rs.getBoolean("has_post"));
+                project.setIdProject(rs.getLong("id_project"));
+                UserDAO userDAO = new UserDAO(this.connection);
+                project.setUser(userDAO.findById(id));
+
+                list.add(project);
+            }
+            st.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        } finally{
+            this.connection.closeConnection();
+        }
+        return list;
+    }
+
+    public List<Project> findByTitle(String title){
+        this.connection.openConnection();
+        String sql = "SELECT * FROM project WHERE title LIKE '%?%';";
+        List<Project> list = new ArrayList<>();
         try{
             PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
             st.setString(1, title);
             ResultSet rs = st.executeQuery();
-            if(rs.next()) {
-                project = new Project(rs.getString("title"),
+            while(rs.next()) {
+                Project project = new Project(rs.getString("title"),
                         rs.getString("category"),
                         rs.getString("text_project"),
                         rs.getString("used_tech"),
@@ -141,6 +172,8 @@ public class ProjectDAO implements DAOMethods<Project> {
                 project.setIdProject(rs.getLong("id_project"));
                 UserDAO userDAO = new UserDAO(this.connection);
                 project.setUser(userDAO.findById(rs.getLong("id_user")));
+
+                list.add(project);
             }
             st.close();
         }catch(SQLException e){
@@ -148,7 +181,7 @@ public class ProjectDAO implements DAOMethods<Project> {
         }finally{
             this.connection.closeConnection();
         }
-        return project;
+        return list;
     }
 
     @Override
@@ -181,31 +214,6 @@ public class ProjectDAO implements DAOMethods<Project> {
             this.connection.closeConnection();
         }
         return list;
-    }
-
-    public List<Project> findByUserId(long idUser, User user) throws SQLException {
-        List<Project> projects = new ArrayList<>();
-        String sql = "SELECT * FROM project WHERE id_user = ?";
-        PreparedStatement st = connection.getConnection().prepareStatement(sql);
-        st.setLong(1, idUser);
-        ResultSet rs = st.executeQuery();
-
-        while (rs.next()) {
-            Project project = new Project(
-                    rs.getString("title"),
-                    rs.getString("category"),
-                    rs.getString("text_project"),
-                    rs.getString("used_tech"),
-                    rs.getString("used_instruments"),
-                    user
-            );
-            project.setHasPost(rs.getBoolean("has_post"));
-            project.setIdProject(rs.getLong("id_project"));
-            projects.add(project);
-        }
-
-        st.close();
-        return projects;
     }
 
 }
