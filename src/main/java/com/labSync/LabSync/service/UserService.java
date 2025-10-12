@@ -46,6 +46,14 @@ public class UserService {
         return userDAO.findById(id);
     }
 
+    public User getUserByLogin(String username, String password){
+        User user = userDAO.findByUsername(username);
+        if(user == null || !user.getPassword().equals(password)){
+            throw new UserNotFoundException("Usuário ou senha inválidos");
+        }
+        return user;
+    }
+
     public List<User> getAllUsers() {
         if(userDAO.findAll().isEmpty()){
             throw new UserNotFoundException("Usuários não encontrados");

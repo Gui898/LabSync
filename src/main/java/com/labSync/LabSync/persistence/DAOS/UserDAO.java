@@ -174,4 +174,31 @@ public class UserDAO implements DAOMethods<User> {
         return user;
     }
 
+    public User findByUsername(String nameUser) {
+        this.connection.openConnection();
+        String sql = "SELECT * FROM users WHERE nameUser=?;";
+        User user = null;
+        try{
+            PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
+            st.setString(1, nameUser);
+
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                user = new User(rs.getString("nameUser"), rs.getString("surname"),
+                        rs.getString("email"), rs.getString("academicEmail"),
+                        rs.getString("passwordUser"), rs.getBoolean("readerOrAuthor"),
+                        rs.getString("aboutMe"));
+                user.setIdUser(rs.getLong("id_user"));
+            }
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.connection.closeConnection();
+        }
+        return user;
+    }
+
 }

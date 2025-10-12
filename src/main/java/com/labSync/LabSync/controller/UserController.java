@@ -1,5 +1,6 @@
 package com.labSync.LabSync.controller;
 
+import com.labSync.LabSync.models.LoginShape;
 import com.labSync.LabSync.models.User;
 import com.labSync.LabSync.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,12 @@ public class UserController implements ProtocolMethods<User>{
     public ResponseEntity<User> post(@RequestBody User user) {
         User added = userService.addUser(user);
         return ResponseEntity.status(201).body(added);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> getByUsernameAndPassword(@RequestBody LoginShape loginShape) {
+        User user = userService.getUserByLogin(loginShape.username(), loginShape.password());
+        return ResponseEntity.ok(user);
     }
 
     @Override
@@ -50,7 +57,7 @@ public class UserController implements ProtocolMethods<User>{
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<User>  getById(@PathVariable int id) {
+    public ResponseEntity<User> getById(@PathVariable int id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
