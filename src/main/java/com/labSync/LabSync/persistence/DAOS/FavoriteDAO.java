@@ -65,6 +65,21 @@ public class FavoriteDAO implements DAOMethods<Favorite> {
         }
     }
 
+    public void deleteByUserId(long id){
+        this.connection.openConnection();
+        String sql = "DELETE FROM favorite WHERE id_user=?;";
+        try{
+         PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
+         st.setLong(1, id);
+         st.executeUpdate();
+         st.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            this.connection.closeConnection();
+        }
+    }
+
     @Override
     public Favorite findById(long id) {
         this.connection.openConnection();

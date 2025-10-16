@@ -4,7 +4,9 @@ import com.labSync.LabSync.exception.UserConflictException;
 import com.labSync.LabSync.exception.UserInvalidValuesException;
 import com.labSync.LabSync.exception.UserNotFoundException;
 import com.labSync.LabSync.models.User;
+import com.labSync.LabSync.persistence.DAOS.PostsDAO;
 import com.labSync.LabSync.persistence.DAOS.UserDAO;
+import com.labSync.LabSync.persistence.MySqlConnection;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +15,19 @@ import java.util.regex.Pattern;
 @Service
 public class UserService {
 
-    UserDAO userDAO;
+    private final PostsService postsService;
+    private final ProjectService projectService;
+    private final FavoriteService favoriteService;
+    private final UserDAO userDAO;
 
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    private static final Pattern EMAIL_PATTERN =
+            Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
 
-    public UserService(UserDAO userDAO) {
+    public UserService(PostsService postsService, ProjectService projectService,
+                       FavoriteService favoriteService, UserDAO userDAO) {
+        this.postsService = postsService;
+        this.projectService = projectService;
+        this.favoriteService = favoriteService;
         this.userDAO = userDAO;
     }
 
@@ -35,11 +45,14 @@ public class UserService {
     }
 
     public long delete(long id){
+        postsService.deleteByUserId(id);
+        projectService.deleteByUserId(id);
+        favoriteService.deleteByUserId(id);
         userDAO.delete(id);
         return id;
     }
 
-    public User getUserById(int id) {
+    public User getUserById(long id) {
         if(userDAO.findById(id) == null){
             throw new UserNotFoundException();
         }

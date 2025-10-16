@@ -3,7 +3,6 @@ package com.labSync.LabSync.controller;
 import com.labSync.LabSync.models.Posts;
 import com.labSync.LabSync.service.PostsService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,7 +51,7 @@ public class PostsController implements ProtocolMethods<Posts>{
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<Posts> getById(@PathVariable int id) {
+    public ResponseEntity<Posts> getById(@PathVariable long id) {
         return ResponseEntity.ok(postsService.getPostById(id));
     }
 

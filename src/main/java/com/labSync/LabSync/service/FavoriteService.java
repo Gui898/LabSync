@@ -38,11 +38,23 @@ public class FavoriteService {
         return id;
     }
 
-    public Favorite getFavoriteById(int id) {
+    public long deleteByUserId(long id){
+        favoriteDAO.deleteByUserId(id);
+        return id;
+    }
+
+    public Favorite getFavoriteById(long id) {
         if(favoriteDAO.findById(id) == null){
             throw new FavoriteNotFoundException();
         }
         return favoriteDAO.findById(id);
+    }
+
+    public List<Favorite> getAllFavoritesByUserId(long id){
+        if(favoriteDAO.findAllByUserID(id) == null){
+            throw new FavoriteNotFoundException("Favoritos não encontrados.");
+        }
+        return favoriteDAO.findAllByUserID(id);
     }
 
     public List<Favorite> getAllFavorites() {

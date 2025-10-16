@@ -48,8 +48,13 @@ public class FavoriteController implements ProtocolMethods<Favorite>{
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<Favorite> getById(@PathVariable int id) {
+    public ResponseEntity<Favorite> getById(@PathVariable long id) {
         return ResponseEntity.ok(favoriteService.getFavoriteById(id));
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Favorite>> getAllByUserId(@PathVariable long id){
+        return ResponseEntity.ok(favoriteService.getAllFavoritesByUserId(id));
     }
 
     @Override

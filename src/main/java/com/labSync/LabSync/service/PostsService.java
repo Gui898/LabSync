@@ -38,6 +38,11 @@ public class PostsService {
         return id;
     }
 
+    public long deleteByUserId(long id){
+        postsDAO.deleteByUserId(id);
+        return id;
+    }
+
     public List<Posts> getAllPostsByUserId(long id) throws Exception {
         if(postsDAO.findAllByUserId(id) == null){
             throw new PostNotFoundException();
@@ -45,7 +50,7 @@ public class PostsService {
         return postsDAO.findAllByUserId(id);
     }
 
-    public Posts getPostById(int id) {
+    public Posts getPostById(long id) {
         if(postsDAO.findById(id) == null){
             throw new PostNotFoundException();
         }

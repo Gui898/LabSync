@@ -83,6 +83,21 @@ public class PostsDAO implements DAOMethods<Posts> {
         }
     }
 
+    public void deleteByUserId(long id){
+        this.connection.openConnection();
+        String sql = "DELETE FROM posts WHERE id_user=?;";
+        try{
+            PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
+            st.setLong(1, id);
+            st.executeUpdate();
+            st.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            this.connection.closeConnection();
+        }
+    }
+
     @Override
     public Posts findById(long id) {
         this.connection.openConnection();

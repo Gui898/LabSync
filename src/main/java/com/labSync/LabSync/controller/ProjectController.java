@@ -50,7 +50,7 @@ public class ProjectController implements ProtocolMethods<Project>{
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getById(@PathVariable int id) {
+    public ResponseEntity<Project> getById(@PathVariable long id) {
         return ResponseEntity.ok(projectService.getProjectById(id));
     }
 

@@ -35,7 +35,12 @@ public class ProjectService {
         return id;
     }
 
-    public Project getProjectById(int id){
+    public long deleteByUserId(long id){
+        projectDAO.deleteByUserId(id);
+        return id;
+    }
+
+    public Project getProjectById(long id){
         if(projectDAO.findById(id) == null){
             throw new ProjectNotFoundException();
         }

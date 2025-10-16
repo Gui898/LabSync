@@ -57,7 +57,7 @@ public class UserController implements ProtocolMethods<User>{
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@PathVariable int id) {
+    public ResponseEntity<User> getById(@PathVariable long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
