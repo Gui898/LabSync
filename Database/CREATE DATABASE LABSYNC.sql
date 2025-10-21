@@ -14,7 +14,7 @@ CREATE TABLE users (
 
 CREATE TABLE project (
   id_project BIGINT PRIMARY KEY AUTO_INCREMENT,
-  title VARCHAR(100) NOT NULL UNIQUE,
+  title VARCHAR(100) UNIQUE,
   category VARCHAR(100) NOT NULL,
   used_instruments TEXT,
   text_project LONGTEXT NOT NULL,
@@ -36,9 +36,9 @@ CREATE TABLE posts (
 CREATE TABLE favorite (
   id_favorite BIGINT PRIMARY KEY AUTO_INCREMENT,
   id_user BIGINT NOT NULL,
-  id_project BIGINT NOT NULL,
+  id_post BIGINT NOT NULL,
   FOREIGN KEY (id_user) REFERENCES users(id_user),
-  FOREIGN KEY (id_project) REFERENCES project(id_project)
+  FOREIGN KEY (id_post) REFERENCES posts(id_post)
 );
 
 CREATE TABLE commentPost(
@@ -48,3 +48,5 @@ CREATE TABLE commentPost(
     PRIMARY KEY(id_comment),
     FOREIGN KEY(id_post) REFERENCES posts(id_post)
 );
+
+SELECT * FROM users;
