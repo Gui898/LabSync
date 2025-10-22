@@ -169,11 +169,11 @@ public class ProjectDAO implements DAOMethods<Project> {
 
     public List<Project> findByTitle(String title){
         this.connection.openConnection();
-        String sql = "SELECT * FROM project WHERE title LIKE ?;";
+        String sql = "SELECT * FROM project WHERE REGEXP_REPLACE(title, '<[^>]+>', '') LIKE ?;";
         List<Project> list = new ArrayList<>();
         try{
             PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
-            st.setString(1, title);
+            st.setString(1, "%" + title + "%");
             ResultSet rs = st.executeQuery();
             while(rs.next()) {
                 Project project = new Project(rs.getString("title"),

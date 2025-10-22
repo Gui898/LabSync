@@ -11,7 +11,6 @@ public class Project {
     private String textProjects;
     private String usedTech;
     private boolean hasPost;
-    @JsonIgnore
     private User user;
     //false is sketch
 

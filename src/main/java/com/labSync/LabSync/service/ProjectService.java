@@ -39,11 +39,18 @@ public class ProjectService {
         return id;
     }
 
-    public Project getProjectById(long id){
+    public Project getProjectByTitle(long id){
         if(projectDAO.findById(id) == null){
             throw new ProjectNotFoundException();
         }
         return projectDAO.findById(id);
+    }
+
+    public Project getProjectByTitle(String title){
+        if(projectDAO.findByTitle(title).getFirst() == null || projectDAO.findByTitle(title).isEmpty()){
+            throw new ProjectNotFoundException();
+        }
+        return projectDAO.findByTitle(title).getFirst();
     }
 
     public List<Project> getProjectsByUserId(long userId){
@@ -71,7 +78,7 @@ public class ProjectService {
             }
         }
 
-        if(project.getTitle() == null || project.getCategory() == null || project.getTextProjects() == null){
+        if(project.getCategory() == null || project.getTextProjects() == null){
             throw new ProjectInvalidValuesException();
         }
     }
