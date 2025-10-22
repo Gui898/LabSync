@@ -22,7 +22,7 @@ public class Posts {
 
     public Posts(long likes, Project project){
         this.likes = likes;
-        if (!project.hasPost()) {
+        if (!project.getHasPost()) {
             this.project = project;
             this.project.setHasPost(true);
             this.user = project.getUser();

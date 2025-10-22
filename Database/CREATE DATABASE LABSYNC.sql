@@ -14,8 +14,8 @@ CREATE TABLE users (
 
 CREATE TABLE project (
   id_project BIGINT PRIMARY KEY AUTO_INCREMENT,
-  title VARCHAR(100) UNIQUE,
-  category VARCHAR(100) NOT NULL,
+  title VARCHAR(255) UNIQUE,
+  category TEXT NOT NULL,
   used_instruments TEXT,
   text_project LONGTEXT NOT NULL,
   used_tech TEXT,
@@ -49,4 +49,5 @@ CREATE TABLE commentPost(
     FOREIGN KEY(id_post) REFERENCES posts(id_post)
 );
 
+SELECT * FROM project;
 SELECT * FROM users;

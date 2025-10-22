@@ -25,7 +25,6 @@ public class ProjectService {
     }
 
     public Project updateProject(Project project){
-        validateProject(project);
         projectDAO.edit(project);
         return project;
     }
@@ -67,7 +66,7 @@ public class ProjectService {
         }
 
         for(Project p : projectDAO.findByTitle(project.getTitle())){
-            if(p.getIdProject() == project.getIdProject()){
+            if(!(p.getIdProject() == project.getIdProject())){
                 throw new ProjectConflictException();
             }
         }
@@ -76,5 +75,6 @@ public class ProjectService {
             throw new ProjectInvalidValuesException();
         }
     }
+
 
 }

@@ -33,7 +33,7 @@ public class ProjectDAO implements DAOMethods<Project> {
             st.setString(3, project.getUsedInstruments());
             st.setString(4, project.getTextProjects());
             st.setString(5, project.getUsedTech());
-            st.setBoolean(6, project.hasPost());
+            st.setBoolean(6, project.getHasPost());
             st.setLong(7, project.getUser().getIdUser());
             st.executeUpdate();
 
@@ -62,7 +62,7 @@ public class ProjectDAO implements DAOMethods<Project> {
             st.setString(3, project.getUsedInstruments());
             st.setString(4, project.getTextProjects());
             st.setString(5, project.getUsedTech());
-            st.setBoolean(6, project.hasPost());
+            st.setBoolean(6, project.getHasPost());
             st.setLong(7, project.getIdProject());
             st.executeUpdate();
             st.close();
@@ -169,7 +169,7 @@ public class ProjectDAO implements DAOMethods<Project> {
 
     public List<Project> findByTitle(String title){
         this.connection.openConnection();
-        String sql = "SELECT * FROM project WHERE title LIKE '%?%';";
+        String sql = "SELECT * FROM project WHERE title LIKE ?;";
         List<Project> list = new ArrayList<>();
         try{
             PreparedStatement st = this.connection.getConnection().prepareStatement(sql);

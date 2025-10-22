@@ -10,9 +10,9 @@ public class Project {
     private String usedInstruments;
     private String textProjects;
     private String usedTech;
+    private boolean hasPost;
     @JsonIgnore
     private User user;
-    private boolean hasPost;
     //false is sketch
 
     public Project() {
@@ -83,7 +83,7 @@ public class Project {
         this.usedTech = usedTech;
     }
 
-    public boolean hasPost() {
+    public boolean getHasPost() {
         return hasPost;
     }
 
