@@ -64,4 +64,11 @@ public class PostsService {
         return postsDAO.findAll();
     }
 
+    public List<Posts> getPopular() {
+        if(postsDAO.findPopular().isEmpty()){
+            throw new PostNotFoundException();
+        }
+        return postsDAO.findPopular();
+    }
+
 }

@@ -65,4 +65,9 @@ public class PostsController implements ProtocolMethods<Posts>{
     public ResponseEntity<List<Posts>> getAll() {
         return ResponseEntity.ok(postsService.getAllPosts());
     }
+
+    @GetMapping("/popular")
+    public ResponseEntity<List<Posts>> getPopular(){
+        return ResponseEntity.ok(postsService.getPopular());
+    }
 }

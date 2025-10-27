@@ -195,4 +195,36 @@ public class PostsDAO implements DAOMethods<Posts> {
         return list;
     }
 
+    public List<Posts> findPopular(){
+        this.connection.openConnection();
+        String sql = "SELECT *, ROW_NUMBER() OVER(ORDER BY likes DESC) " +
+                "FROM posts pt INNER JOIN project pr ON pt.id_project = pr.id_project " +
+                "LIMIT 10;";
+        List<Posts> list = new ArrayList<>();
+        try{
+            PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                User user = new UserDAO(connection).findById(rs.getLong("id_user"));
+                Project project = new Project(rs.getString("title"), rs.getString("category"),
+                        rs.getString("text_project"), rs.getString("used_tech"),
+                        rs.getString("used_instruments"), user);
+                project.setIdProject(rs.getLong("id_project"));
+
+                Posts post = new Posts(rs.getLong("likes"), project);
+                post.setIdPost(rs.getLong("id_post"));
+
+                list.add(post);
+            }
+            st.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            this.connection.closeConnection();
+        }
+
+        return list;
+    }
+
 }
