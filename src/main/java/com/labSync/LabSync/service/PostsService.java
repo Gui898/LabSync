@@ -38,6 +38,11 @@ public class PostsService {
         return id;
     }
 
+    public long deleteByProjectId(long id){
+        postsDAO.deleteByProjectId(id);
+        return id;
+    }
+
     public long deleteByUserId(long id){
         postsDAO.deleteByUserId(id);
         return id;

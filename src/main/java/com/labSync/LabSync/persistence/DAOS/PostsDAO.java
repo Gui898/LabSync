@@ -83,6 +83,21 @@ public class PostsDAO implements DAOMethods<Posts> {
         }
     }
 
+    public void deleteByProjectId(long id){
+        this.connection.openConnection();
+        String sql = "DELETE FROM posts WHERE id_project=?;";
+        try{
+            PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
+            st.setLong(1, id);
+            st.executeUpdate();
+            st.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            this.connection.closeConnection();
+        }
+    }
+
     public void deleteByUserId(long id){
         this.connection.openConnection();
         String sql = "DELETE FROM posts WHERE id_user=?;";
@@ -199,7 +214,7 @@ public class PostsDAO implements DAOMethods<Posts> {
         this.connection.openConnection();
         String sql = "SELECT *, ROW_NUMBER() OVER(ORDER BY likes DESC) " +
                 "FROM posts pt INNER JOIN project pr ON pt.id_project = pr.id_project " +
-                "LIMIT 10;";
+                "LIMIT 5;";
         List<Posts> list = new ArrayList<>();
         try{
             PreparedStatement st = this.connection.getConnection().prepareStatement(sql);

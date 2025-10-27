@@ -33,6 +33,12 @@ public class PostsController implements ProtocolMethods<Posts>{
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/project/{id}")
+    public ResponseEntity<Void> deleteByProjectId(@PathVariable long id){
+        postsService.deleteByProjectId(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @Override
     @PutMapping("/{id}")
     public ResponseEntity<Posts> put(@PathVariable long id, @RequestBody Posts post) {
