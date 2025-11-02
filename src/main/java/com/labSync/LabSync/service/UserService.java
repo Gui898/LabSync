@@ -43,9 +43,9 @@ public class UserService {
     }
 
     public long delete(long id){
+        favoriteService.deleteByUserId(id);
         postsService.deleteByUserId(id);
         projectService.deleteByUserId(id);
-        favoriteService.deleteByUserId(id);
         userDAO.delete(id);
         return id;
     }

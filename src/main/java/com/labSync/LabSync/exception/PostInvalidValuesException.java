@@ -7,6 +7,6 @@ public class PostInvalidValuesException extends RuntimeException {
     }
 
     public PostInvalidValuesException(String message) {
-        super(message);
+        super("Valores inválidos para o Post, " + message);
     }
 }

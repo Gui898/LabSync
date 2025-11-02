@@ -6,6 +6,6 @@ public class ProjectInvalidValuesException extends RuntimeException {
     }
 
     public ProjectInvalidValuesException(String message) {
-        super(message);
+        super("Você inseriu valores inválidos para o projeto. Causa: " + message);
     }
 }
