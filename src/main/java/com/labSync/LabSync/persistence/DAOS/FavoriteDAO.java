@@ -80,6 +80,24 @@ public class FavoriteDAO implements DAOMethods<Favorite> {
         }
     }
 
+    public void deleteByPostAndUserId(long idPost, long idUser){
+        this.connection.openConnection();
+        String sql = "DELETE FROM favorite WHERE id_post=? AND id_user=?";
+        try{
+            PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
+            st.setLong(1, idPost);
+            st.setLong(2, idUser);
+            st.executeUpdate();
+
+            st.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            this.connection.closeConnection();
+        }
+
+    }
+
     @Override
     public Favorite findById(long id) {
         this.connection.openConnection();
@@ -91,8 +109,8 @@ public class FavoriteDAO implements DAOMethods<Favorite> {
 
             ResultSet rs = st.executeQuery();
             if(rs.next()){
-                PostsDAO postDAO = new PostsDAO(this.connection);
-                UserDAO userDAO = new UserDAO(this.connection);
+                PostsDAO postDAO = new PostsDAO(connection);
+                UserDAO userDAO = new UserDAO(connection);
                 fav = new Favorite(postDAO.findById(rs.getLong("id_post")),
                         userDAO.findById(rs.getLong("id_user")));
                 fav.setIdFavorite(rs.getLong("id_favorite"));
@@ -117,15 +135,15 @@ public class FavoriteDAO implements DAOMethods<Favorite> {
 
             ResultSet rs = st.executeQuery();
             while(rs.next()){
-                PostsDAO postDAO = new PostsDAO(this.connection);
-                UserDAO userDAO = new UserDAO(this.connection);
+                PostsDAO postDAO = new PostsDAO(connection);
+                UserDAO userDAO = new UserDAO(connection);
                 Favorite fav = new Favorite(postDAO.findById(rs.getLong("id_post")),
                         userDAO.findById(rs.getLong("id_user")));
                 fav.setIdFavorite(rs.getLong("id_favorite"));
 
                 list.add(fav);
-                st.close();
             }
+            st.close();
         }catch(SQLException e){
             e.printStackTrace();
         }finally{

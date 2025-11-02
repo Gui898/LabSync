@@ -1,5 +1,7 @@
 package com.labSync.LabSync.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Set;
 
 public class Posts {
@@ -9,6 +11,7 @@ public class Posts {
     //comments
     private User user;
     private Project project;
+    @JsonIgnore
     private Set<Favorite> favorites;
 
     public Posts () {

@@ -41,13 +41,5 @@ CREATE TABLE favorite (
   FOREIGN KEY (id_post) REFERENCES posts(id_post)
 );
 
-CREATE TABLE commentPost(
-	id_comment BIGINT AUTO_INCREMENT,
-    message VARCHAR(300) NOT NULL,
-    id_post BIGINT NOT NULL,
-    PRIMARY KEY(id_comment),
-    FOREIGN KEY(id_post) REFERENCES posts(id_post)
-);
-
 SELECT * FROM project;
 SELECT * FROM users;

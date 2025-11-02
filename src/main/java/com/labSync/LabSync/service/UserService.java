@@ -4,9 +4,7 @@ import com.labSync.LabSync.exception.UserConflictException;
 import com.labSync.LabSync.exception.UserInvalidValuesException;
 import com.labSync.LabSync.exception.UserNotFoundException;
 import com.labSync.LabSync.models.User;
-import com.labSync.LabSync.persistence.DAOS.PostsDAO;
 import com.labSync.LabSync.persistence.DAOS.UserDAO;
-import com.labSync.LabSync.persistence.MySqlConnection;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

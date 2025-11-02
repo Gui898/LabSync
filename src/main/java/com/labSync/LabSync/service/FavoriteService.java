@@ -43,6 +43,10 @@ public class FavoriteService {
         return id;
     }
 
+    public void deleteByPostAndUserId(long idPost, long idUser){
+        favoriteDAO.deleteByPostAndUserId(idPost, idUser);
+    }
+
     public Favorite getFavoriteById(long id) {
         if(favoriteDAO.findById(id) == null){
             throw new FavoriteNotFoundException();
