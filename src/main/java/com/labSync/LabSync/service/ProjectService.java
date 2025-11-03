@@ -46,13 +46,13 @@ public class ProjectService {
         return projectDAO.findById(id);
     }
 
+    //MUDA PRA LIST ESSE DIABO SEU BOSTA, SE EU VER NA GRAVAÇÃO A MESMA COISA IREI LHE ESPANCAR
     public Project getProjectByTitle(String title){
         if(projectDAO.findByTitle(title).getFirst() == null){
             throw new ProjectNotFoundException();
         }
         return projectDAO.findByTitle(title).getFirst();
     }
-    //MUDA PRA LIST ESSE DIABO SEU BOSTA, SE EU VER NA GRAVAÇÃO A MESMA COISA IREI LHE ESPANCAR
 
     public List<Project> getProjectsByUserId(long userId){
         if(projectDAO.findAllByUserId(userId).isEmpty()){
@@ -72,8 +72,6 @@ public class ProjectService {
         if(project == null){
             throw new ProjectNotFoundException();
         }
-
-        //tentar ajustar com .contains
 
         for(Project p : projectDAO.findByTitle(project.getTitle())){
             if(!(p.getIdProject() == project.getIdProject())){
