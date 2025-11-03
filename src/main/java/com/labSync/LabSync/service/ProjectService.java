@@ -39,19 +39,18 @@ public class ProjectService {
         return id;
     }
 
-    public Project getProjectByTitle(long id){
+    public Project getProjectById(long id){
         if(projectDAO.findById(id) == null){
             throw new ProjectNotFoundException();
         }
         return projectDAO.findById(id);
     }
 
-    //MUDA PRA LIST ESSE DIABO SEU BOSTA, SE EU VER NA GRAVAÇÃO A MESMA COISA IREI LHE ESPANCAR
-    public Project getProjectByTitle(String title){
-        if(projectDAO.findByTitle(title).getFirst() == null){
+    public List<Project> getProjectByTitle(String title){
+        if(projectDAO.findByTitle(title).isEmpty()){
             throw new ProjectNotFoundException();
         }
-        return projectDAO.findByTitle(title).getFirst();
+        return projectDAO.findByTitle(title);
     }
 
     public List<Project> getProjectsByUserId(long userId){

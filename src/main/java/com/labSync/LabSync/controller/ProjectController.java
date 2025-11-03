@@ -51,11 +51,11 @@ public class ProjectController implements ProtocolMethods<Project>{
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<Project> getById(@PathVariable long id) {
-        return ResponseEntity.ok(projectService.getProjectByTitle(id));
+        return ResponseEntity.ok(projectService.getProjectById(id));
     }
 
     @GetMapping("/search/{title}")
-    public ResponseEntity<Project> getByTitle(@PathVariable String title){
+    public ResponseEntity<List<Project>> getByTitle(@PathVariable String title){
         String alterdTitle = title.replace("-", " ");
         return ResponseEntity.ok(projectService.getProjectByTitle(alterdTitle));
     }
