@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class RestExceptionHandler {
 
-    //USER EXCEPTIONS
-
     @ExceptionHandler(UserNotFoundException.class)
     private ResponseEntity<RestErrorMessage> userNotFoundHandler(UserNotFoundException e){
         RestErrorMessage message = new RestErrorMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, e.getMessage());
@@ -35,8 +33,6 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
-    //PROJECT EXCEPTIONS
-
     @ExceptionHandler(ProjectNotFoundException.class)
     private ResponseEntity<RestErrorMessage> projectNotFoundException(ProjectNotFoundException e){
         RestErrorMessage message = new RestErrorMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, e.getMessage());
@@ -49,15 +45,11 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.CONFLICT);
     }
 
-    //POST EXCEPTIONS
-
     @ExceptionHandler(PostNotFoundException.class)
     private ResponseEntity<RestErrorMessage> postNotFoundException(PostNotFoundException e) {
         RestErrorMessage message = new RestErrorMessage(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, e.getMessage());
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
-
-    // FAVORITE EXCEPTIONS
 
     @ExceptionHandler(FavoriteNotFoundException.class)
     private ResponseEntity<RestErrorMessage> favoriteNotFoundException(FavoriteNotFoundException e) {

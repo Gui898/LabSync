@@ -1,7 +1,5 @@
 package com.labSync.LabSync.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class Favorite {
 
     private long idFavorite;

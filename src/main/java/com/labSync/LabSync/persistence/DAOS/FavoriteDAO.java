@@ -80,6 +80,22 @@ public class FavoriteDAO implements DAOMethods<Favorite> {
         }
     }
 
+    public void deleteByPostId(long idPost) {
+        this.connection.openConnection();
+        String sql = "DELETE FROM favorite WHERE id_post=?;";
+        try {
+            PreparedStatement st = this.connection.getConnection().prepareStatement(sql);
+            st.setLong(1, idPost);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+           e.printStackTrace();
+        } finally {
+            this.connection.closeConnection();
+        }
+
+    }
+
     public void deleteByPostAndUserId(long idPost, long idUser){
         this.connection.openConnection();
         String sql = "DELETE FROM favorite WHERE id_post=? AND id_user=?";

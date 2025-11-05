@@ -8,7 +8,6 @@ public class Posts {
 
     private long idPost;
     private long likes;
-    //comments
     private User user;
     private Project project;
     @JsonIgnore

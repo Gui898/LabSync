@@ -1,7 +1,5 @@
 package com.labSync.LabSync.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.List;
 
 public class User {
@@ -13,7 +11,6 @@ public class User {
     private String password;
     private String academicEmail;
     private String aboutMe;
-    //true for author, false for reader.
     private boolean readerOrAuthor;
     private List<Project> projects;
     private List<Posts> posts;

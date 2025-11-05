@@ -43,6 +43,11 @@ public class FavoriteService {
         return id;
     }
 
+    public long deleteByIdPost(long idPost) {
+        favoriteDAO.deleteByPostId(idPost);
+        return idPost;
+    }
+
     public void deleteByPostAndUserId(long idPost, long idUser){
         favoriteDAO.deleteByPostAndUserId(idPost, idUser);
     }

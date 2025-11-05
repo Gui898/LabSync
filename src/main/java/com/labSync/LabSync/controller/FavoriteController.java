@@ -39,6 +39,18 @@ public class FavoriteController implements ProtocolMethods<Favorite>{
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<Void> deleteByUserId(@PathVariable long id){
+        favoriteService.deleteByUserId(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/post/{id}")
+    public ResponseEntity<Void> deleteByPostId(@PathVariable long id){
+        favoriteService.deleteByIdPost(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @Override
     @PutMapping("/{id}")
     public ResponseEntity<Favorite> put(@PathVariable long id, @RequestBody Favorite favorite) {
